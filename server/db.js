@@ -10,11 +10,11 @@ const createTables = async () => {
     DROP TABLE  IF EXISTS reservations CASCADE;
     CREATE TABLE customers(
         id UUID PRIMARY KEY,
-        name VARCHAR(100) NOT NULL UNIQUE
+        name VARCHAR(100) NOT NULL
     );
     CREATE TABLE restaurants(
         id UUID PRIMARY KEY,
-        name VARCHAR(250) NOT NULL UNIQUE
+        name VARCHAR(250) NOT NULL
     );
     CREATE TABLE reservations(
         id UUID PRIMARY KEY,
@@ -95,6 +95,7 @@ const destroyReservation = async ({ id, customer_id }) => {
     DELETE FROM reservations
     WHERE id = $1 AND customer_id=$2
     `;
+    await client.query(SQL, [id, customer_id]);
 };
 
 module.exports = {

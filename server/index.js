@@ -34,6 +34,15 @@ app.get("/api/restaurants", async (req, res, next) => {
   }
 });
 
+//get reservations
+app.get("/api/reservations", async (req, res, next) => {
+  try {
+    res.send(await fetchReservations());
+  } catch (ex) {
+    next(ex);
+  }
+});
+
 //delete reservation
 app.delete(
   "/api/customers/:customer_id/reservations/:id",
@@ -83,14 +92,15 @@ const init = async () => {
 
   //post reservation
   app.post(
-    "/api/customers/:customer_id/reservations",
+    "/api/customers/:id/reservations",
     async (req, res, next) => {
       try {
         res.status(201).send(
           await createReservation({
-            customer_id: req.params.customer_id,
+            customer_id: req.params.id,
             restaurant_id: req.body.restaurant_id,
             reservation_date: req.body.reservation_date,
+            party_count: req.body.party_count,
           })
         );
       } catch (ex) {
