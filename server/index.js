@@ -43,6 +43,7 @@ app.delete(
         customer_id: req.params.customer_id,
         id: req.params.id,
       });
+      res.sendStatus(204);
     } catch (ex) {
       next(ex);
     }
